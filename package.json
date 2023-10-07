@@ -1,6 +1,6 @@
 {
   "name": "voces-heroicas-voice",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Voces Heroicas Voice is an intermediary localhost webserver application that allows the videogame Conan Exiles, when using the mod \"Voces Heroicas Voice\", to send information to the TeamsSpeak3 plugin SaltyChat, making possible to use a brand new voice chat system for the game",
   "main": "main.js",
   "scripts": {
