@@ -1,0 +1,39 @@
+{
+  "name": "voces-heroicas-voice",
+  "version": "1.0.0",
+  "description": "Voces Heroicas Voice is an intermediary localhost webserver application that allows the videogame Conan Exiles, when using the mod \"Voces Heroicas Voice\", to send information to the TeamsSpeak3 plugin SaltyChat, making possible to use a brand new voice chat system for the game",
+  "main": "main.js",
+  "scripts": {
+	  "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "electron-builder build --win --publish never",
+    "deploy": "electron-builder build --win --publish always"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JMGHalo/VocesHeroicasVoiceUpdater.git"
+  },
+  "keywords": [
+    "Voces",
+    "Heroicas",
+    "voice",
+    "chat",
+    "Conan",
+    "Exiles",
+    "TeamSpeak3",
+    "SaltyChat"
+  ],
+  "author": "JoshPhantom",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/JMGHalo/VocesHeroicasVoiceUpdater/issues"
+  },
+  "homepage": "https://github.com/JMGHalo/VocesHeroicasVoiceUpdater#readme",
+  "devDependencies": {
+        "electron-builder": "^24.6.4"
+  },
+  "dependencies": {
+    "electron-updater": "^6.1.4",
+    "electron": "^26.2.4"
+  }
+}
