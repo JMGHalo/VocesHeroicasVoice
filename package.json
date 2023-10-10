@@ -1,18 +1,55 @@
 {
-  "name": "voces-heroicas-voice",
-  "version": "1.0.1",
-  "description": "Voces Heroicas Voice is an intermediary localhost webserver application that allows the videogame Conan Exiles, when using the mod \"Voces Heroicas Voice\", to send information to the TeamsSpeak3 plugin SaltyChat, making possible to use a brand new voice chat system for the game",
-  "main": "main.js",
+  "name": "voces_heroicas_voice",
+  "version": "1.0.0",
+  "description": "Voces Heroicas Voice for TeamSpeak3 with SaltyChat",
+  "main": "./src/main.js",
   "scripts": {
 	  "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "electron-builder build --win --publish never",
+    "pack": "electron-builder --dir",
     "deploy": "electron-builder build --win --publish always"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/JMGHalo/VocesHeroicasVoiceUpdater.git"
+    "url": "https://github.com/JMGHalo/VocesHeroicasVoice.git"
   },
+  "build": {
+    "appId": "com.joshphantom.vocesheroicasvoice",
+    "productName": "Voces Heroicas Voice",
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": true,
+      "packElevateHelper": true,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": true,
+      "displayLanguageSelector": false,
+      "unicode": true,
+      "warningsAsErrors": true,
+      "runAfterFinish": true,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "menuCategory": false
+    },
+    "files": [
+      "./src/*",
+      "./build/*"
+    ],
+    "directories": {
+      "buildResources": "build",
+      "output": "dist"
+    }
+  },
+  "publish": {
+    "provider": "github",
+    "releaseType": "release"
+  },
+  "author": "JoshPhantom",
+  "license": "GPL-3.0-or-later",
   "keywords": [
     "Voces",
     "Heroicas",
@@ -23,17 +60,17 @@
     "TeamSpeak3",
     "SaltyChat"
   ],
-  "author": "JoshPhantom",
-  "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/JMGHalo/VocesHeroicasVoiceUpdater/issues"
+    "url": "https://github.com/JMGHalo/VocesHeroicasVoice/issues"
   },
-  "homepage": "https://github.com/JMGHalo/VocesHeroicasVoiceUpdater#readme",
+  "homepage": "https://github.com/JMGHalo/VocesHeroicasVoice#readme",
   "devDependencies": {
         "electron": "^26.2.4",
         "electron-builder": "^24.6.4"
   },
   "dependencies": {
-    "electron-updater": "^6.1.4"
+    "electron-updater": "^6.1.4",
+    "websocket": "^1.0.34",
+    "ws": "^8.14.0"
   }
 }

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<head>
+  <title>Voces Heroicas Voice</title>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 20px;
+      font-family: sans-serif;
+      background-color: #eaeaea;
+      text-align: center;
+    }
+    #notification {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 200px;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  }
+  .hidden {
+    display: none;
+  }
+  </style>
+</head>
+<body>
+  <div>
+    <img src="../build/icon.ico">
+    <h1>Voces Heroicas Voice</h1>
+  </div>
+  <div>
+    <p id="saltychat_status">Conexión con SaltyChat: No se intentó conectar. ¿Hay alguna actualización pendiente?</p>
+    <button id="connect_salty" class="hidden" onClick="restart_salty()">
+      Conectar
+    </button>
+  </div>
+  <p id="version"></p>
+  <div id="notification" class="hidden">
+    <p id="message">Se ha encontrado una nueva actualización.</p>
+    <button id="download-button" onClick="updateButton()">
+      Descargar
+    </button>
+    <button id="restart-button" onClick="restartApp()" class="hidden">
+      Reiniciar
+    </button>
+  </div>
+  <script>
+    const { ipcRenderer } = require('electron');
+    const version = document.getElementById('version');
+    
+    ipcRenderer.send('app_version');
+    ipcRenderer.on('app_version', (event, arg) => {
+      ipcRenderer.removeAllListeners('app_version');
+      version.innerText = 'Versión ' + arg.version;
+    });
+
+    const notification = document.getElementById('notification');
+    const message = document.getElementById('message');
+    const downloadButton = document.getElementById('download-button');
+    const restartButton = document.getElementById('restart-button');
+    const connectSalty = document.getElementById('connect_salty');
+    const saltychatStatus = document.getElementById('saltychat_status');
+
+    ipcRenderer.on('update_available', () => {
+      //ipcRenderer.removeAllListeners('update_available');
+      connectSalty.classList.add('hidden');
+      message.innerText = 'Hay una nueva actualización disponible.';
+      notification.classList.remove('hidden');
+    });
+    ipcRenderer.on('update_downloaded', () => {
+      //ipcRenderer.removeAllListeners('update_downloaded');
+      message.innerText = 'Actualización descargada. ¿Reiniciar e instalar ahora?';
+      restartButton.classList.remove('hidden');
+      notification.classList.remove('hidden');
+    });
+
+    function updateButton() {
+      ipcRenderer.send('download_update');
+      downloadButton.classList.add('hidden');
+      notification.classList.add('hidden');
+      message.innerText = 'Descargando actualización...';
+    }function restartApp() {
+      ipcRenderer.send('restart_app');
+    }
+    function restart_salty() {
+      ipcRenderer.send('restart_salty');
+    }
+    ipcRenderer.on('saltychat_connected', () => {
+      connectSalty.classList.add('hidden');
+      saltychatStatus.innerText = 'Conexión con SaltyChat: Conectado';
+    });
+    ipcRenderer.on('saltychat_disconnected', () => {
+      connectSalty.classList.remove('hidden');
+      saltychatStatus.innerText = 'Conexión con SaltyChat: Desconectado. ¿Has iniciado TeamSpeak3 y tienes instalado SaltyChat?';
+    });
+  </script>
+</body>
+
